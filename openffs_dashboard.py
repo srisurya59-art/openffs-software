@@ -4,7 +4,7 @@ from part4_calc import Part4MetalLoss
 # Set page configuration for a commercial engineering tool look
 st.set_page_config(page_title="OpenFFS™ Integrity Platform", layout="wide")
 
-# 1. Commercial Brand Header (Addressing Page 2, 13 & 19 Review)
+# 1. Commercial Brand Header
 st.markdown("""
 <div style='background-color: #0F172A; padding: 20px; border-radius: 8px; margin-bottom: 25px; border-bottom: 4px solid #3B82F6;'>
     <h1 style='margin: 0; color: #FFFFFF; font-family: "Segoe UI", sans-serif; letter-spacing: 0.5px;'>OpenFFS™</h1>
@@ -13,7 +13,7 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# 2. Sidebar Setup: Project Management Workspace (Addressing Page 14 Review)
+# 2. Sidebar Setup: Project Management Workspace
 with st.sidebar:
     st.header("📂 Project Metadata")
     project_no = st.text_input("Project Number:", value="PRJ-2026-001")
@@ -37,7 +37,7 @@ with st.sidebar:
     
     st.divider()
     st.header("📥 Inspection Data Import")
-    uploaded_file = st.file_uploader("Upload Inspection Data (CSV, XLSX, DOCX, PDF)", type=["csv", "xlsx", "docx", "pdf"])
+    uploaded_file = st.file_uploader("Upload Inspection Data (CSV, XLSX, DOCX, PDF)", type=["txt", "csv", "xlsx", "docx", "pdf"])
 
 # 3. Main Workspace Layout
 col1, col2 = st.columns(2)
@@ -45,7 +45,6 @@ col1, col2 = st.columns(2)
 with col1:
     st.markdown(f"### ⚙️ {module} Engineering Inputs")
     
-    # Structured Engineering Data Inputs (Addressing Page 3 & 7 Review Validation)
     with st.container(border=True):
         st.markdown("**Design & Operational Bounds**")
         pressure = st.number_input("Design Pressure (P) [psi]:", min_value=0.0, value=150.0, step=5.0)
@@ -63,7 +62,6 @@ with col1:
         t_min_measured = st.number_input("Minimum Measured Thickness (t_min) [inches]:", min_value=0.0, max_value=t_nominal, value=0.420, step=0.01)
         corrosion_allowance = st.number_input("Future Corrosion Allowance (FCA) [inches]:", min_value=0.0, value=0.050, step=0.01)
 
-    # Engineering input guardrails (Addressing Page 7 Data Validation Review)
     if t_min_measured > t_nominal:
         st.error("❌ Engineering Input Error: Measured thickness cannot exceed nominal thickness.")
     elif t_min_measured <= 0 or allowable_stress <= 0:
@@ -76,7 +74,6 @@ with col2:
     st.markdown("### 📊 Engineering Assessment Engine")
     
     if st.session_state.get("assessment_executed", False):
-        # 4. Invoke the real independent backend engine (Addressing Page 2, 3, 9 & 11)
         engine = Part4MetalLoss()
         engine.set_input("pressure", pressure)
         engine.set_input("allowable_stress", allowable_stress)
@@ -86,10 +83,8 @@ with col2:
         engine.set_input("t_min_measured", t_min_measured)
         engine.set_input("corrosion_allowance", corrosion_allowance)
         
-        # Execute the underlying math workflow safely
         record = engine.execute()
         
-        # Pull outputs from the standardized framework record structures
         t_min_required = engine.outputs["t_min_required"]
         t_available = engine.outputs["t_available"]
         rsf = engine.outputs["rsf"]
@@ -108,7 +103,10 @@ with col2:
         st.divider()
         st.subheader("📄 Formal Engineering Report Summary")
         
-        # Dynamic, Professional Consultancy Deliverable Output (Addressing Page 5, 6, 10, 16 & 17)
+        # Flattening framework lists into clean text rows to guarantee flawless HTML compilation
+        assumptions_text = " and ".join(engine.assumptions)
+        references_text = " & ".join(engine.references)
+
         st.markdown(f"""
         <div style='background-color: #F8FAFC; padding: 25px; border-radius: 6px; border: 1px solid #E2E8F0; border-left: 6px solid #0F172A;'>
             <div style='text-align: center; border-bottom: 2px solid #0F172A; padding-bottom: 10px; font-weight: bold; font-size: 16px; color: #0F172A;'>
@@ -122,15 +120,15 @@ with col2:
             
             <h4 style='color: #1E293B; margin-top: 20px; margin-bottom: 5px; border-bottom: 1px solid #CBD5E1;'>1.0 Evaluation Methodology & Core Assumptions</h4>
             <p style='font-size:12.5px; color: #334155; line-height: 1.5; margin: 0;'>
-                Calculations are completed strictly under the rules of {engine.description} Utilizing <b>{engine.assumptions[0]}</b> and assuming that <b>{engine.assumptions[1]}</b>.
+                Calculations are completed strictly under the rules of {engine.description}. Baseline evaluation criteria assumes that: <i>{assumptions_text}</i>.
             </p>
             
             <h4 style='color: #1E293B; margin-top: 15px; margin-bottom: 5px; border-bottom: 1px solid #CBD5E1;'>2.0 Traceable Governing Equations & Compliance Summary</h4>
             <p style='font-size:12.5px; color: #334155; line-height: 1.5; margin: 0;'>
                 Code Thickness Formula: <code>t_min = (P * R) / (S * E - 0.6 * P)</code><br>
                 Minimum Allowable Safe Wall Target: <span style='font-family: monospace; font-weight: bold;'>{t_min_required:.4f} in</span>.<br>
-                Actual Corroded Ligament Remaining: <span style='font-family: monospace; font-weight: bold;'>{t_available:.4f} in</span>.<br>
-                Standards References Utilized: <u>{engine.references[0]}</u> and <u>{engine.references[1]}</u>.
+                Actual Corroded固定 Remaining Ligament: <span style='font-family: monospace; font-weight: bold;'>{t_available:.4f} in</span>.<br>
+                Standards References Traceability: {references_text}.
             </p>
             
             <h4 style='color: #1E293B; margin-top: 15px; margin-bottom: 5px; border-bottom: 1px solid #CBD5E1;'>3.0 Conclusive Engineering Judgement & Recommendation</h4>
