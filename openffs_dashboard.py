@@ -3,7 +3,7 @@ import streamlit as st
 # Set page configuration for a professional wide layout
 st.set_page_config(page_title="Open FFS Initiative", layout="wide")
 
-# Custom Title Styling
+# Custom Title Styling with correct HTML rendering flag
 st.markdown("<h1 style='text-align: center; color: #1E3A8A;'>Open FFS Initiative Dashboard</h1>", unsafe_allow_html=True)
 st.markdown("<p style='text-align: center; color: #4B5563; font-size: 18px;'>API 579 & AISC Structural Integrity Assessment Suite</p>", unsafe_allow_html=True)
 st.divider()
@@ -26,7 +26,7 @@ with st.sidebar:
             "AISC Structural FFS - Columns Assessment",
             "AISC Structural FFS - Beams Assessment",
             "AISC Structural FFS - Braces & Ties Assessment",
-            "AISC Structural FFS - Comprehensive Structure Assessment",
+            "AISC Structural FFS - Comprehensive Structure Assessment"
         ]
     )
     
@@ -36,10 +36,10 @@ with st.sidebar:
     depth = st.number_input("Local Crack/Flaw Depth (inches):", min_value=0.0, value=0.1, step=0.01)
     
     st.divider()
-    uploaded_file = st.file_uploader("Upload Inspection Data (TXT, CSV, PDF)", type=["txt", "csv", "pdf"])
+    uploaded_file = st.file_uploader("Upload Inspection Data (TXT, CSV, PDF, WORD, EXCEL)", type=["txt", "csv", "pdf", "docx", "xlsx"])
 
 # Main Dashboard Workspace Layout using Columns
-col1, col2 = st.columns([2, 1])
+col1, col2 = st.columns(2)
 
 with col1:
     st.subheader(f"🔍 Active Assessment: {module}")
