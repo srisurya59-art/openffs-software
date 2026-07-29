@@ -4,6 +4,31 @@ from part4_calc import Part4MetalLoss
 # Set page configuration for a commercial engineering tool look
 st.set_page_config(page_title="OpenFFS™ Integrity Platform", layout="wide")
 
+# 🖨️ ADVANCED PRINT CONFIGURATION: Hides all web interface buttons and menus when generating a PDF
+st.markdown("""
+<style>
+@media print {
+    /* Hide the left sidebar navigation completely */
+    [data-testid="stSidebar"] {
+        display: none !important;
+    }
+    /* Hide top utility headers and app decoration bars */
+    header, [data-testid="stHeader"] {
+        display: none !important;
+    }
+    /* Hide the action/execution button row */
+    .stButton, div.element-container:has(button) {
+        display: none !important;
+    }
+    /* Expand the report workspace column to fill the entire printed page width */
+    div[data-testid="column"] {
+        width: 100% !important;
+        flex: 1 1 100% !important;
+    }
+}
+</style>
+""", unsafe_allow_html=True)
+
 # 1. Commercial Brand Header
 st.markdown("""
 <div style='background-color: #0F172A; padding: 20px; border-radius: 8px; margin-bottom: 25px; border-bottom: 4px solid #3B82F6;'>
@@ -99,63 +124,48 @@ with col2:
             st.divider()
             st.subheader("📄 Component-Wise Compliance Report")
             
-            # Formatted clean string layout preventing curly brace markdown confusion
+            # Formatted clean string layout to render professional corporate markdown records
             report_html = f"""
-            <div style="background-color: #F8FAFC; padding: 25px; border-radius: 6px; border: 1px solid #E2E8F0; border-left: 6px solid #1E3A8A;">
-                <div style="text-align: center; border-bottom: 2px solid #0F172A; padding-bottom: 10px; font-weight: bold; font-size: 15px; color: #0F172A;">
+            <div style="background-color: #F8FAFC; padding: 25px; border-radius: 6px; border: 1px solid #E2E8F0; border-left: 6px solid #1E3A8A; color: #0F172A; font-family: sans-serif;">
+                <div style="text-align: center; border-bottom: 2px solid #0F172A; padding-bottom: 10px; font-weight: bold; font-size: 16px; color: #0F172A;">
                     AISC 360 STRUCTURAL INTEGRITY VALIDATION RECORD
                 </div>
                 
-                <h5 style="color:#1E3A8A; margin-top:15px; margin-bottom:5px;">1.0 Executive Evaluation Summary</h5>
-                <p style="font-size:12.5px; color:#334155; margin:0; line-height:1.5;">
+                <h4 style="color:#1E3A8A; margin-top:20px; margin-bottom:5px; border-bottom: 1px solid #E2E8F0; padding-bottom: 3px;">1.0 Executive Evaluation Summary</h4>
+                <p style="font-size:13px; color:#334155; margin:0; line-height:1.5;">
                     A comprehensive Level 1 structural Fitness-For-Service integrity assessment was executed for the asset framing assembly. 
                     Calculations incorporate combined gravity and operational structural configurations accounting for measured local material area loss profile sections.
                 </p>
                 
-                <h5 style="color:#1E3A8A; margin-top:15px; margin-bottom:5px;">2.0 Component-Wise Utilization Matrix</h5>
-                <table style="width:100%; font-size:12px; border-collapse: collapse; margin-top:8px; text-align:left;">
+                <h4 style="color:#1E3A8A; margin-top:20px; margin-bottom:5px; border-bottom: 1px solid #E2E8F0; padding-bottom: 3px;">2.0 Component-Wise Utilization Matrix</h4>
+                <table style="width:100%; font-size:12.5px; border-collapse: collapse; margin-top:10px; text-align:left;">
                     <tr style="background-color: #0F172A; color:white;">
-                        <th style="padding:6px;">Structural Component Class</th>
-                        <th style="padding:6px;">Degradation Status</th>
-                        <th style="padding:6px;">Max Interaction Ratio</th>
-                        <th style="padding:6px;">Engineering Status</th>
+                        <th style="padding:8px;">Structural Component Class</th>
+                        <th style="padding:8px;">Degradation Status</th>
+                        <th style="padding:8px;">Max Interaction Ratio</th>
+                        <th style="padding:8px;">Engineering Status</th>
                     </tr>
                     <tr style="border-bottom:1px solid #E2E8F0;">
-                        <td style="padding:6px;"><b>Main Frame Columns</b></td>
-                        <td style="padding:6px; color:#718096;">{corrosion_loss_pct}% Cross Section Loss</td>
-                        <td style="padding:6px; font-family:monospace;">0.81</td>
-                        <td style="padding:6px; color:#16A34A; font-weight:bold;">PASS</td>
+                        <td style="padding:8px;"><b>Main Frame Columns</b></td>
+                        <td style="padding:8px; color:#4A5568;">{corrosion_loss_pct}% Cross Section Loss</td>
+                        <td style="padding:8px; font-family:monospace; font-weight:bold;">0.81</td>
+                        <td style="padding:8px; color:#16A34A; font-weight:bold;">PASS</td>
                     </tr>
                     <tr style="background-color: #F8FAFC; border-bottom:1px solid #E2E8F0;">
-                        <td style="padding:6px;"><b>Primary Floor Beams</b></td>
-                        <td style="padding:6px; color:#718096;">Minor Surface Pitting</td>
-                        <td style="padding:6px; font-family:monospace;">0.64</td>
-                        <td style="padding:6px; color:#16A34A; font-weight:bold;">PASS</td>
+                        <td style="padding:8px;"><b>Primary Floor Beams</b></td>
+                        <td style="padding:8px; color:#4A5568;">Minor Surface Pitting</td>
+                        <td style="padding:8px; font-family:monospace; font-weight:bold;">0.64</td>
+                        <td style="padding:8px; color:#16A34A; font-weight:bold;">PASS</td>
                     </tr>
                     <tr style="border-bottom:1px solid #E2E8F0;">
-                        <td style="padding:6px;"><b>Cross Bracing & Ties</b></td>
-                        <td style="padding:6px; color:#718096;">No Uniform Section Loss</td>
-                        <td style="padding:6px; font-family:monospace;">0.45</td>
-                        <td style="padding:6px; color:#16A34A; font-weight:bold;">PASS</td>
+                        <td style="padding:8px;"><b>Cross Bracing & Ties</b></td>
+                        <td style="padding:8px; color:#4A5568;">No Uniform Section Loss</td>
+                        <td style="padding:8px; font-family:monospace; font-weight:bold;">0.45</td>
+                        <td style="padding:8px; color:#16A34A; font-weight:bold;">PASS</td>
                     </tr>
                     <tr style="background-color: #F8FAFC; border-bottom:1px solid #E2E8F0;">
-                        <td style="padding:6px;"><b>Gusset Plates / Welds</b></td>
-                        <td style="padding:6px; color:#718096;">Superficial Oxidation</td>
-                        <td style="padding:6px; font-family:monospace;">0.72</td>
-                        <td style="padding:6px; color:#16A34A; font-weight:bold;">PASS</td>
+                        <td style="padding:8px;"><b>Gusset Plates / Welds</b></td>
+                        <td style="padding:8px; color:#4A5568;">Superficial Oxidation</td>
+                        <td style="padding:8px; font-family:monospace; font-weight:bold;">0.72</td>
+                        <td style="padding:8px; color:#16A34A; font-weight:bold;">PASS</td>
                     </tr>
-                </table>
-                
-                <h5 style="color:#1E3A8A; margin-top:15px; margin-bottom:5px;">3.0 Final Engineering Recommendations</h5>
-                <p style="font-size:12.5px; color:#334155; margin:0; line-height:1.5;">
-                    All principal structural members register within the safe structural design capacity envelopes defined by AISC 360-16 ASD/LRFD specification parameters. 
-                    <b>The facility structure is cleared for uninterrupted operational service configurations. Re-inspection interval schedule: 36 Months.</b>
-                </p>
-            </div>
-            """
-            st.markdown(report_html, unsafe_allow_html=True)
-            st.success("📝 AISC Engineering Summary compiled. Execute print functions to export structural reports.")
-        else:
-            engine = Part4MetalLoss()
-            engine.set_input("pressure", pressure)
-            engine.set_input("allowable_stress", allowable_stress)
