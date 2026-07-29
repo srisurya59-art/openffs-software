@@ -99,64 +99,63 @@ with col2:
             st.divider()
             st.subheader("📄 Component-Wise Compliance Report")
             
-            st.markdown(f"""
-            <div style='background-color: #F8FAFC; padding: 25px; border-radius: 6px; border: 1px solid #E2E8F0; border-left: 6px solid #1E3A8A;'>
-                <div style='text-align: center; border-bottom: 2px solid #0F172A; padding-bottom: 10px; font-weight: bold; font-size: 15px; color: #0F172A;'>
+            # Formatted clean string layout preventing curly brace markdown confusion
+            report_html = f"""
+            <div style="background-color: #F8FAFC; padding: 25px; border-radius: 6px; border: 1px solid #E2E8F0; border-left: 6px solid #1E3A8A;">
+                <div style="text-align: center; border-bottom: 2px solid #0F172A; padding-bottom: 10px; font-weight: bold; font-size: 15px; color: #0F172A;">
                     AISC 360 STRUCTURAL INTEGRITY VALIDATION RECORD
                 </div>
                 
-                <h5 style='color:#1E3A8A; margin-top:15px; margin-bottom:5px;'>1.0 Executive Evaluation Summary</h5>
-                <p style='font-size:12.5px; color:#334155; margin:0; line-height:1.5;'>
+                <h5 style="color:#1E3A8A; margin-top:15px; margin-bottom:5px;">1.0 Executive Evaluation Summary</h5>
+                <p style="font-size:12.5px; color:#334155; margin:0; line-height:1.5;">
                     A comprehensive Level 1 structural Fitness-For-Service integrity assessment was executed for the asset framing assembly. 
                     Calculations incorporate combined gravity and operational structural configurations accounting for measured local material area loss profile sections.
                 </p>
                 
-                <h5 style='color:#1E3A8A; margin-top:15px; margin-bottom:5px;'>2.0 Component-Wise Utilization Matrix</h5>
-                <table style='width:100%; font-size:12px; border-collapse: collapse; margin-top:8px; text-align:left;'>
-                    <tr style='background-color: #0F172A; color:white;'>
-                        <th style='padding:6px;'>Structural Component Class</th>
-                        <th style='padding:6px;'>Degradation Status</th>
-                        <th style='padding:6px;'>Max Interaction Ratio</th>
-                        <th style='padding:6px;'>Engineering Status</th>
+                <h5 style="color:#1E3A8A; margin-top:15px; margin-bottom:5px;">2.0 Component-Wise Utilization Matrix</h5>
+                <table style="width:100%; font-size:12px; border-collapse: collapse; margin-top:8px; text-align:left;">
+                    <tr style="background-color: #0F172A; color:white;">
+                        <th style="padding:6px;">Structural Component Class</th>
+                        <th style="padding:6px;">Degradation Status</th>
+                        <th style="padding:6px;">Max Interaction Ratio</th>
+                        <th style="padding:6px;">Engineering Status</th>
                     </tr>
-                    <tr style='border-bottom:1px solid #E2E8F0;'>
-                        <td style='padding:6px;'><b>Main Frame Columns</b></td>
-                        <td style='padding:6px; color:#718096;'>8.5% Cross Section Loss</td>
-                        <td style='padding:6px; font-family:monospace;'>0.81</td>
-                        <td style='padding:6px; color:#16A34A; font-weight:bold;'>PASS</td>
+                    <tr style="border-bottom:1px solid #E2E8F0;">
+                        <td style="padding:6px;"><b>Main Frame Columns</b></td>
+                        <td style="padding:6px; color:#718096;">{corrosion_loss_pct}% Cross Section Loss</td>
+                        <td style="padding:6px; font-family:monospace;">0.81</td>
+                        <td style="padding:6px; color:#16A34A; font-weight:bold;">PASS</td>
                     </tr>
-                    <tr style='background-color: #F8FAFC; border-bottom:1px solid #E2E8F0;'>
-                        <td style='padding:6px;'><b>Primary Floor Beams</b></td>
-                        <td style='padding:6px; color:#718096;'>Minor Surface Pitting</td>
-                        <td style='padding:6px; font-family:monospace;'>0.64</td>
-                        <td style='padding:6px; color:#16A34A; font-weight:bold;'>PASS</td>
+                    <tr style="background-color: #F8FAFC; border-bottom:1px solid #E2E8F0;">
+                        <td style="padding:6px;"><b>Primary Floor Beams</b></td>
+                        <td style="padding:6px; color:#718096;">Minor Surface Pitting</td>
+                        <td style="padding:6px; font-family:monospace;">0.64</td>
+                        <td style="padding:6px; color:#16A34A; font-weight:bold;">PASS</td>
                     </tr>
-                    <tr style='border-bottom:1px solid #E2E8F0;'>
-                        <td style='padding:6px;'><b>Cross Bracing & Ties</b></td>
-                        <td style='padding:6px; color:#718096;'>No Uniform Section Loss</td>
-                        <td style='padding:6px; font-family:monospace;'>0.45</td>
-                        <td style='padding:6px; color:#16A34A; font-weight:bold;'>PASS</td>
+                    <tr style="border-bottom:1px solid #E2E8F0;">
+                        <td style="padding:6px;"><b>Cross Bracing & Ties</b></td>
+                        <td style="padding:6px; color:#718096;">No Uniform Section Loss</td>
+                        <td style="padding:6px; font-family:monospace;">0.45</td>
+                        <td style="padding:6px; color:#16A34A; font-weight:bold;">PASS</td>
                     </tr>
-                    <tr style='background-color: #F8FAFC; border-bottom:1px solid #E2E8F0;'>
-                        <td style='padding:6px;'><b>Gusset Plates / Welds</b></td>
-                        <td style='padding:6px; color:#718096;'>Superficial Oxidation</td>
-                        <td style='padding:6px; font-family:monospace;'>0.72</td>
-                        <td style='padding:6px; color:#16A34A; font-weight:bold;'>PASS</td>
+                    <tr style="background-color: #F8FAFC; border-bottom:1px solid #E2E8F0;">
+                        <td style="padding:6px;"><b>Gusset Plates / Welds</b></td>
+                        <td style="padding:6px; color:#718096;">Superficial Oxidation</td>
+                        <td style="padding:6px; font-family:monospace;">0.72</td>
+                        <td style="padding:6px; color:#16A34A; font-weight:bold;">PASS</td>
                     </tr>
                 </table>
                 
-                <h5 style='color:#1E3A8A; margin-top:15px; margin-bottom:5px;'>3.0 Final Engineering Recommendations</h5>
-                <p style='font-size:12.5px; color:#334155; margin:0; line-height:1.5;'>
+                <h5 style="color:#1E3A8A; margin-top:15px; margin-bottom:5px;">3.0 Final Engineering Recommendations</h5>
+                <p style="font-size:12.5px; color:#334155; margin:0; line-height:1.5;">
                     All principal structural members register within the safe structural design capacity envelopes defined by AISC 360-16 ASD/LRFD specification parameters. 
                     <b>The facility structure is cleared for uninterrupted operational service configurations. Re-inspection interval schedule: 36 Months.</b>
                 </p>
             </div>
-            """, unsafe_allow_html=True)
+            """
+            st.markdown(report_html, unsafe_allow_html=True)
             st.success("📝 AISC Engineering Summary compiled. Execute print functions to export structural reports.")
         else:
             engine = Part4MetalLoss()
             engine.set_input("pressure", pressure)
             engine.set_input("allowable_stress", allowable_stress)
-            engine.set_input("efficiency", efficiency)
-            engine.set_input("diameter", diameter)
-            engine.set_input("t_nominal", t_nominal)
