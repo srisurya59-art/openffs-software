@@ -124,7 +124,6 @@ with col2:
             st.divider()
             st.subheader("📄 Component-Wise Compliance Report")
             
-            # Formatted clean string layout to render professional corporate markdown records
             report_html = f"""
             <div style="background-color: #F8FAFC; padding: 25px; border-radius: 6px; border: 1px solid #E2E8F0; border-left: 6px solid #1E3A8A; color: #0F172A; font-family: sans-serif;">
                 <div style="text-align: center; border-bottom: 2px solid #0F172A; padding-bottom: 10px; font-weight: bold; font-size: 16px; color: #0F172A;">
@@ -169,3 +168,4 @@ with col2:
                         <td style="padding:8px; font-family:monospace; font-weight:bold;">0.72</td>
                         <td style="padding:8px; color:#16A34A; font-weight:bold;">PASS</td>
                     </tr>
+                </table>
