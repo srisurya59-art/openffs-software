@@ -25,7 +25,8 @@ with st.sidebar:
             "API 579 Part 14 - Paris' Law Fatigue Crack Life Integration",
             "AISC Structural FFS - Columns Assessment",
             "AISC Structural FFS - Beams Assessment",
-            "AISC Structural FFS - Braces & Ties Assessment"
+            "AISC Structural FFS - Braces & Ties Assessment",
+            AISC Structural FFS - Comprehensive Structure Assessment
         ]
     )
     
