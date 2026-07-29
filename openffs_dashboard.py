@@ -103,10 +103,10 @@ with col2:
         st.divider()
         st.subheader("📄 Formal Engineering Report Summary")
         
-        # Flattening framework lists into clean text rows to guarantee flawless HTML compilation
         assumptions_text = " and ".join(engine.assumptions)
         references_text = " & ".join(engine.references)
 
+        # 🛠️ FIXED: Escaping curly braces by doubling them {{ }} to prevent raw text compilation errors
         st.markdown(f"""
         <div style='background-color: #F8FAFC; padding: 25px; border-radius: 6px; border: 1px solid #E2E8F0; border-left: 6px solid #0F172A;'>
             <div style='text-align: center; border-bottom: 2px solid #0F172A; padding-bottom: 10px; font-weight: bold; font-size: 16px; color: #0F172A;'>
@@ -127,7 +127,7 @@ with col2:
             <p style='font-size:12.5px; color: #334155; line-height: 1.5; margin: 0;'>
                 Code Thickness Formula: <code>t_min = (P * R) / (S * E - 0.6 * P)</code><br>
                 Minimum Allowable Safe Wall Target: <span style='font-family: monospace; font-weight: bold;'>{t_min_required:.4f} in</span>.<br>
-                Actual Corroded固定 Remaining Ligament: <span style='font-family: monospace; font-weight: bold;'>{t_available:.4f} in</span>.<br>
+                Actual Corroded Remaining Ligament: <span style='font-family: monospace; font-weight: bold;'>{t_available:.4f} in</span>.<br>
                 Standards References Traceability: {references_text}.
             </p>
             
