@@ -4,8 +4,8 @@ import streamlit as st
 st.set_page_config(page_title="Open FFS Initiative", layout="wide")
 
 # Custom Title Styling
-st.markdown("<h1 style='text-align: center; color: #1E3A8A;'>Open FFS Initiative Dashboard</h1>", unsafe_content_type=True)
-st.markdown("<p style='text-align: center; color: #4B5563; font-size: 18px;'>API 579 & AISC Structural Integrity Assessment Suite</p>", unsafe_content_type=True)
+st.markdown("<h1 style='text-align: center; color: #1E3A8A;'>Open FFS Initiative Dashboard</h1>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center; color: #4B5563; font-size: 18px;'>API 579 & AISC Structural Integrity Assessment Suite</p>", unsafe_allow_html=True)
 st.divider()
 
 # Sidebar Layout for Configuration Parameters
