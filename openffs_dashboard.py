@@ -26,7 +26,7 @@ with st.sidebar:
             "AISC Structural FFS - Columns Assessment",
             "AISC Structural FFS - Beams Assessment",
             "AISC Structural FFS - Braces & Ties Assessment",
-            "AISC Structural FFS - Comprehensive Structure Assessment,
+            "AISC Structural FFS - Comprehensive Structure Assessment",
         ]
     )
     
