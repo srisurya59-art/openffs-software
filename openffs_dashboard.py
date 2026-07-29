@@ -148,28 +148,40 @@ def main():
             pdf_filename = "Part9_Crack_Flaw_Report.pdf"
             pdf_generator.generate_certified_pdf_report("Part 9 - Crack-Like Flaws", {"Operating_Pressure_psi": p, "Flaw_Depth_in": depth}, {"Base_MAWP_psi": res["base_mawp_psi"], "Reduced_MAWP_psi": res["reduced_mawp_psi"]}, res["status"], reviewer, pdf_filename)
 
-        elif choice == '14':
-            import fatigue_core
-            print("\n--- Initiating API 579 Part 14 Fatigue Life Integration ---")
-            cycles = float(input("Enter Targeted Cyclic Fatigue Evaluation Horizon (Cycles): "))
-            res = fatigue_core.evaluate_paris_law_growth(0.05, 15.0, cycles, 3.6e-10, 3.0)
-            print("\n[EVALUATION RESULT]:", res)
+        #elif choice == '14':
+            #import fatigue_core
+            #print("\n--- Initiating API 579 Part 14 Fatigue Life Integration ---")
+            #cycles = float(input("Enter Targeted Cyclic Fatigue Evaluation Horizon (Cycles): "))
+            #res = fatigue_core.evaluate_paris_law_growth(0.05, 15.0, cycles, 3.6e-10, 3.0)
+            #print("\n[EVALUATION RESULT]:", res)
             
-            reviewer = get_signature_stamp_details()
-            pdf_filename = "Part14_Fatigue_Assessment_Report.pdf"
-            pdf_generator.generate_certified_pdf_report("Part 14 - Fatigue Crack Growth", {"Target_Cycles": cycles, "Initial_Depth_in": 0.05}, {"Final_Depth_in": res["final_depth_in"], "Total_Growth_in": res["total_growth_in"]}, str(res["stable_growth"]), reviewer, pdf_filename)
+            #reviewer = get_signature_stamp_details()
+            #pdf_filename = "Part14_Fatigue_Assessment_Report.pdf"
+            #pdf_generator.generate_certified_pdf_report("Part 14 - Fatigue Crack Growth", {"Target_Cycles": cycles, "Initial_Depth_in": 0.05}, {"Final_Depth_in": res["final_depth_in"], "Total_Growth_in": res["total_growth_in"]}, str(res["stable_growth"]), reviewer, pdf_filename)
 
-        elif choice == 'V' or choice == 'v':
-            import sys
-            sys.path.append(os.path.join(BASE_DIR, 'validation'))
-            import run_benchmarks
-            run_benchmarks.execute_mathematical_audit()
+        #elif choice == 'V' or choice == 'v':
+            #import sys
+            #sys.path.append(os.path.join(BASE_DIR, 'validation'))
+            #import run_benchmarks
+            #run_benchmarks.execute_mathematical_audit()
 
-        else:
-            print("\n[INVALID SELECTION]: Please pick a valid engineering track index option.")
+        #else:
+            #print("\n[INVALID SELECTION]: Please pick a valid engineering track index option.")
             
-        input("\nPress Enter to return to main launcher control board...")
+        #input("\nPress Enter to return to main launcher control board...")
 
-if __name__ == "__main__":
-    main()
+import streamlit as st
+
+# Your calculation logic can stay, but the UI must look like this:
+st.title("Open FFS Initiative Software Engineering")
+
+# Replace your terminal text inputs with a dropdown box:
+module = st.selectbox(
+    "Select an API 579 Engineering Track Module to Run:",
+    ["Part 3 - Low-Temperature Brittle Fracture", 
+     "Part 4 - General Metal Loss", 
+     "Part 5 - Local Metal Loss"]
+)
+
+st.write(f"You selected: {module}")
 
