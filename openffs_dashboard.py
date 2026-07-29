@@ -3,13 +3,19 @@ import streamlit as st
 st.title("Open FFS Initiative Software Engineering")
 
 # 1. Dropdown Selection
+# 1. Dropdown Selection
 module = st.selectbox(
-    "Select an API 579 Engineering Track Module to Run:",
+    "Select an Engineering Track Module to Run:",
     [
-        "Part 3 - Low-Temperature Brittle Fracture", 
-        "Part 4 - General Metal Loss", 
-        "Part 5 - Local Metal Loss"
+        "API 579 Part 3 - Low-Temperature Brittle Fracture", 
+        "API 579 Part 4 - General Metal Loss", 
+        "API 579 Part 5 - Local Metal Loss",
+        "AISC Structural FFS - Columns Assessment",
+        "AISC Structural FFS - Beams Assessment",
+        "AISC Structural FFS - Braces & Ties Assessment"
     ]
+)
+
 )
 
 st.write(f"### Active Module: {module}")
