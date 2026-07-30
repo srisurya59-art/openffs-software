@@ -8,18 +8,15 @@ from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib import colors
 
 def extract_docx_clean_rows(file_bytes):
-    """Safely extracts Word document tables directly into pure strings and flat lists."""
     try:
         doc = Document(BytesIO(file_bytes))
         all_tables_data = []
-        
         for idx, table in enumerate(doc.tables):
             table_rows = []
             for row in table.rows:
                 cells_text = [cell.text.strip().replace('\n', ' ') for cell in row.cells]
                 if any(cells_text):
                     table_rows.append(cells_text)
-            
             if table_rows:
                 all_tables_data.append({
                     "title": f"Extracted Reference Data Matrix (Table {idx + 1})",
@@ -30,19 +27,16 @@ def extract_docx_clean_rows(file_bytes):
         return []
 
 def compile_compliance_pdf(report_metadata, uploaded_files_list):
-    """Solidified core engine script. Returns binary stream directly without structural failures."""
     buffer = BytesIO()
     doc = SimpleDocTemplate(buffer, pagesize=letter, rightMargin=54, leftMargin=54, topMargin=54, bottomMargin=54)
     story = []
     
-    # --- Palette Configuration Layout ---
     PRIMARY_COLOR = colors.HexColor('#0F172A')   
     ACCENT_COLOR = colors.HexColor('#1E3A8A')    
     TEXT_MAIN = colors.HexColor('#334155')       
     BG_LIGHT = colors.HexColor('#F8FAFC')        
     BORDER_COLOR = colors.HexColor('#CBD5E1')    
     
-    # --- Professional Typography Styles ---
     styles = getSampleStyleSheet()
     title_style = ParagraphStyle('DocTitle', parent=styles['Heading1'], fontSize=22, leading=26, textColor=PRIMARY_COLOR, fontName='Helvetica-Bold', spaceAfter=4)
     subtitle_style = ParagraphStyle('DocSub', parent=styles['Normal'], fontSize=10, leading=14, textColor=colors.HexColor('#64748B'), fontName='Helvetica-Bold', spaceAfter=12)
@@ -51,7 +45,6 @@ def compile_compliance_pdf(report_metadata, uploaded_files_list):
     th_style = ParagraphStyle('TableHeader', parent=styles['Normal'], fontSize=9, leading=11, textColor=colors.white, fontName='Helvetica-Bold')
     td_style = ParagraphStyle('TableCell', parent=styles['Normal'], fontSize=9, leading=12, textColor=TEXT_MAIN, fontName='Helvetica')
     
-    # --- Strict Engineering Boundary Calculations Matrix ---
     area_loss = float(report_metadata.get('cross_section_loss', 8.50))
     perf_diam = float(report_metadata.get('max_perforation', 20.0))
     
@@ -65,16 +58,12 @@ def compile_compliance_pdf(report_metadata, uploaded_files_list):
         overall_status = "REMEDIAL ACTION REQUIRED (LEVEL 1 FAIL)"
         status_color = colors.HexColor('#DC2626') 
 
-    # ==========================================
     # 1. DOCUMENT HEADER BLOCK
-    # ==========================================
     story.append(Paragraph("OpenFFS™ Pro - Engineering Assessment Report", title_style))
     story.append(Paragraph(f"<b>DOCUMENT REFERENCE TRACK ID:</b> {report_metadata.get('doc_ref', 'N/A')}", subtitle_style))
     story.append(HRFlowable(width="100%", thickness=1.5, color=ACCENT_COLOR, spaceBefore=0, spaceAfter=12))
     
-    # ==========================================
-    # 2. DYNAMIC EXECUTIVE SUMMARY
-    # ==========================================
+    # 2. EXECUTIVE SUMMARY
     story.append(Paragraph("Executive Summary", h1_style))
     summary_text = (
         f"A Fitness-For-Service (FFS) Level 1 screening assessment has been executed for the asset under reference "
@@ -86,16 +75,13 @@ def compile_compliance_pdf(report_metadata, uploaded_files_list):
     story.append(Paragraph(summary_text, body_style))
     story.append(Spacer(1, 10))
     
-    # ==========================================
-    # 3. METRICS ASSIGNMENT LOGS (Fixed Widths Explicitly Set)
-    # ==========================================
+    # 3. METRICS ASSIGNMENT LOGS (Hardcoded Widths)
     story.append(Paragraph("1. Primary Operational Parameters", h1_style))
     param_table_data = [
         [Paragraph("Evaluation Boundary Component Field", th_style), Paragraph("Logged Input Metric", th_style)],
         [Paragraph("Observed Cross-Section Area Loss", td_style), Paragraph(f"{area_loss} %", td_style)],
         [Paragraph("Maximum Observed Perforation Limit", td_style), Paragraph(f"{perf_diam} mm", td_style)]
     ]
-    # Explicit dimensions: Column 1 is 300 points, Column 2 is 204 points (Total 504)
     param_table = Table(param_table_data, colWidths=[300, 204])
     param_table.setStyle(TableStyle([
         ('BACKGROUND', (0,0), (-1,0), ACCENT_COLOR),
@@ -108,16 +94,13 @@ def compile_compliance_pdf(report_metadata, uploaded_files_list):
     ]))
     story.append(param_table)
     
-    # ==========================================
-    # 4. COMPONENT-WISE COMPLIANCE ANALYSIS GRID (Fixed Widths Explicitly Set)
-    # ==========================================
+    # 4. COMPONENT-WISE COMPLIANCE ANALYSIS GRID (Hardcoded Widths)
     story.append(Paragraph("2. Component-Wise Fitness-For-Service Assessment", h1_style))
     assessment_data = [
         [Paragraph("Degradation Mechanism", th_style), Paragraph("Acceptance Threshold", th_style), Paragraph("Measured Value", th_style), Paragraph("Status", th_style)],
         [Paragraph("Metal Loss (Area)", td_style), Paragraph("&le; 10.0 % Loss", td_style), Paragraph(f"{area_loss} %", td_style), Paragraph(f"<b>{area_status}</b>", td_style)],
         [Paragraph("Pitting / Perforation", td_style), Paragraph("&le; 25.0 mm", td_style), Paragraph(f"{perf_diam} mm", td_style), Paragraph(f"<b>{perf_status}</b>", td_style)]
     ]
-    # Explicit dimensions: 4 columns at 126 points each (Total 504)
     assess_table = Table(assessment_data, colWidths=[126, 126, 126, 126])
     assess_table.setStyle(TableStyle([
         ('BACKGROUND', (0,0), (-1,0), PRIMARY_COLOR),
@@ -130,16 +113,13 @@ def compile_compliance_pdf(report_metadata, uploaded_files_list):
     ]))
     story.append(assess_table)
     
-    # ==========================================
     # 5. GRAPHICAL ARTIFACTS AND UPLOAD ROUTER
-    # ==========================================
     story.append(Paragraph("3. Annex: Component Inspection Photos & Artifacts", h1_style))
     
     images_rendered = 0
     if uploaded_files_list:
         for file_obj in uploaded_files_list:
             file_name = file_obj.name
-            
             file_ext = "." + file_name.split(".")[-1].lower() if "." in file_name else ""
             file_bytes = file_obj.getvalue()
             
@@ -166,7 +146,6 @@ def compile_compliance_pdf(report_metadata, uploaded_files_list):
                         story.append(Spacer(1, 4))
                         
                         formatted_rows = [[Paragraph(str(cell), td_style) for cell in row] for row in table_dict['rows']]
-                        
                         num_cols = len(table_dict['rows'][0]) if table_dict['rows'] else 1
                         col_w = 504.0 / num_cols
                         
@@ -176,3 +155,16 @@ def compile_compliance_pdf(report_metadata, uploaded_files_list):
                             ('GRID', (0,0), (-1,-1), 0.5, BORDER_COLOR),
                             ('TOPPADDING', (0,0), (-1,-1), 5),
                             ('BOTTOMPADDING', (0,0), (-1,-1), 5),
+                            ('LEFTPADDING', (0,0), (-1,-1), 6),
+                        ]))
+                        story.append(doc_table)
+                        story.append(Spacer(1, 10))
+            else:
+                story.append(Paragraph(f"📁 Document asset logged under reference source directory link: <b>{file_name}</b>", td_style))
+    
+    if images_rendered == 0:
+        story.append(Paragraph("<i>No graphical component photo files (.jpg/.png) were supplied for visual logging extraction.</i>", td_style))
+
+    doc.build(story)
+    buffer.seek(0)
+    return buffer.getvalue()
