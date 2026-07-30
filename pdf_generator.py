@@ -95,7 +95,7 @@ def compile_compliance_pdf(report_metadata, uploaded_files_list):
         [Paragraph("Observed Cross-Section Area Loss", td_style), Paragraph(f"{area_loss} %", td_style)],
         [Paragraph("Maximum Observed Perforation Limit", td_style), Paragraph(f"{perf_diam} mm", td_style)]
     ]
-    # Total width is 504 points (252 + 252)
+    # Fixed explicitly to 252 points per column
     param_table = Table(param_table_data, colWidths=[252, 252])
     param_table.setStyle(TableStyle([
         ('BACKGROUND', (0,0), (-1,0), ACCENT_COLOR),
@@ -117,7 +117,7 @@ def compile_compliance_pdf(report_metadata, uploaded_files_list):
         [Paragraph("Metal Loss (Area)", td_style), Paragraph("&le; 10.0 % Loss", td_style), Paragraph(f"{area_loss} %", td_style), Paragraph(f"<b>{area_status}</b>", td_style)],
         [Paragraph("Pitting / Perforation", td_style), Paragraph("&le; 25.0 mm", td_style), Paragraph(f"{perf_diam} mm", td_style), Paragraph(f"<b>{perf_status}</b>", td_style)]
     ]
-    # Total width is 504 points (126 * 4)
+    # Fixed explicitly to 126 points per column
     assess_table = Table(assessment_data, colWidths=[126, 126, 126, 126])
     assess_table.setStyle(TableStyle([
         ('BACKGROUND', (0,0), (-1,0), PRIMARY_COLOR),
@@ -167,7 +167,6 @@ def compile_compliance_pdf(report_metadata, uploaded_files_list):
                         
                         formatted_rows = [[Paragraph(str(cell), td_style) for cell in row] for row in table_dict['rows']]
                         
-                        # Fix column spacing explicitly by dividing the total width by column length
                         num_cols = len(table_dict['rows'][0]) if table_dict['rows'] else 1
                         col_w = 504.0 / num_cols
                         
@@ -176,3 +175,6 @@ def compile_compliance_pdf(report_metadata, uploaded_files_list):
                             ('BACKGROUND', (0,0), (-1,0), BG_LIGHT),
                             ('GRID', (0,0), (-1,-1), 0.5, BORDER_COLOR),
                             ('TOPPADDING', (0,0), (-1,-1), 5),
+                            ('BOTTOMPADDING', (0,0), (-1,-1), 5),
+                            ('LEFTPADDING', (0,0), (-1,-1), 6),
+                        ]))
