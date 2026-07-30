@@ -145,6 +145,5 @@ with col2:
             st.table(l2_data)
             
             st.markdown("#### 3.0 Critical Structural Shoring Directive")
+            # 🛠️ FIXED: Completely flattened condition checks to prevent trailing block crashes
             if interaction_ratio > 1.0 or calculated_rsf < 0.50:
-                st.error("⚠️ SHORING REQUIRED: Bracing member 21A exhibits an as-found RSF of 0.45, dropping well below safe boundaries. Temporary shoring or scaffolding load-redistribution arrays must be locked into position before any localized repair work begins.")
-            if interaction_ratio <= 1.0 and calculated_rsf >= 0.50:
