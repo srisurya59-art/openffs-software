@@ -121,7 +121,7 @@ with col2:
         # -----------------------------------------------------------------------------------------
         # REPORT LAYOUT B: STANDALONE LEVEL 2 ELASTIC STRESS REPORT WITH RSF
         # -----------------------------------------------------------------------------------------
-        else:
+        if report_tier == "API 579 Level 2 Stress Analysis Report":
             st.markdown("## 📊 LEVEL 2 ELASTIC STRESS & RSF ASSESSMENT REPORT")
             st.caption("Advanced Structural Analysis — Quantitative Member Capacity Evaluation")
             st.divider()
@@ -147,4 +147,4 @@ with col2:
             st.markdown("#### 3.0 Critical Structural Shoring Directive")
             if interaction_ratio > 1.0 or calculated_rsf < 0.50:
                 st.error("⚠️ SHORING REQUIRED: Bracing member 21A exhibits an as-found RSF of 0.45, dropping well below safe boundaries. Temporary shoring or scaffolding load-redistribution arrays must be locked into position before any localized repair work begins.")
-            else:
+            if interaction_ratio <= 1.0 and calculated_rsf >= 0.50:
