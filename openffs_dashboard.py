@@ -68,7 +68,7 @@ with st.sidebar:
     st.markdown("### 📥 Document Asset Interception Engine")
     uploaded_file = st.file_uploader("Upload Structural Field Data (DOCX Report Format)", type=["docx"])
 
-# 3. Main Split Engineering Dashboard Layout
+# 3. Main Workspace Setup
 col1, col2 = st.columns([1, 1.2])
 
 with col1:
@@ -93,7 +93,6 @@ with col1:
 with col2:
     if st.session_state.get("active_compiled_report") == report_tier:
         
-        # Display Metadata Header Block
         st.info(f"**Doc Ref:** {project_no}  |  **Date:** {eval_date}  |  **Client:** {client_name}  |  **Structure ID:** {equipment_id}")
         
         # -----------------------------------------------------------------------------------------
@@ -148,13 +147,14 @@ with col2:
             st.error("CRITICAL ENGINEERING ALERT: Cross bracing element 21A yields an as-found RSF of 0.45, breaching the standard safety envelope. The calculated interaction ratio of 1.11 indicates structural overload conditions. Temporary load-bearing shoring profiles or structural scaffolding towers must be safely locked into position prior to completing localized weld restorations.")
 
         # -----------------------------------------------------------------------------------------
-        # 📸 STABLE ASSET IMAGE EXTRACTION LAYER
+        # IMAGE COMPILING LAYER
         # -----------------------------------------------------------------------------------------
         st.markdown("#### 4.0 Field Inspection Photographs — Component Defect Mapping")
         
         if uploaded_file is not None:
-            try:
-                doc = docx.Document(uploaded_file)
-                image_count = 0
-                
-                # Standard docx relation scan block with guaranteed correct indentation variables
+            doc = docx.Document(uploaded_file)
+            image_count = 0
+            for rel in doc.part.relations.values():
+                if "image" in rel.target_ref:
+                    image_bytes = rel.target_part.blob
+                    image_object = Image.open(io.BytesIO(image_bytes))
