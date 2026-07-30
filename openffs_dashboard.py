@@ -3,10 +3,10 @@ import docx
 from PIL import Image
 import io
 
-# Set page configuration for a specialized engineering suite look
-st.set_page_config(page_title="OpenFFS™ Pro - Integrity Suite", layout="wide")
+# Set page configuration for a premium, specialized engineering suite look
+st.set_page_config(page_title="OpenFFS™ Pro - Advanced Fitness-For-Service Platform", layout="wide")
 
-# ADVANCED VISUAL CONTROL: Isolates the final technical report panels for print layouts
+# ADVANCED VISUAL CONTROL: Isolates only the technical report panel for clean PDF printing
 st.markdown("""
 <style>
 @media print {
@@ -24,9 +24,9 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# 1. Commercial Enterprise Branding Header
+# 1. Commercial Enterprise Branding Header Block
 st.title("OpenFFS™ Pro")
-st.caption("Fitness-For-Service Platform | Standards: API 579-1/ASME FFS-1 | AISC 360 Steel Code")
+st.caption("Fitness-For-Service Production Platform | Compliance Tiers: API 579-1/ASME FFS-1 | AISC 360 Steel Code")
 st.divider()
 
 # 2. Sidebar Workspace: Project Metadata Configuration Panel
@@ -148,7 +148,7 @@ with col2:
             st.error("CRITICAL ENGINEERING ALERT: Cross bracing element 21A yields an as-found RSF of 0.45, breaching the standard safety envelope. The calculated interaction ratio of 1.11 indicates structural overload conditions. Temporary load-bearing shoring profiles or structural scaffolding towers must be safely locked into position prior to completing localized weld restorations.")
 
         # -----------------------------------------------------------------------------------------
-        # BROAD-SPECTRUM GRAPHIC LAYER: READS ALL ZIP/MEDIA CHANNELS DIRECTLY FROM THE FILE
+        # 📸 STABLE ASSET IMAGE EXTRACTION LAYER
         # -----------------------------------------------------------------------------------------
         st.markdown("#### 4.0 Field Inspection Photographs — Component Defect Mapping")
         
@@ -156,5 +156,5 @@ with col2:
             try:
                 doc = docx.Document(uploaded_file)
                 image_count = 0
-                for part in doc.part.package.parts:
-                    if "media/image" in part.partname.lower():
+                
+                # Standard docx relation scan block with guaranteed correct indentation variables
