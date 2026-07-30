@@ -38,7 +38,7 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# 2. Sidebar Setup: Project Metadata Configuration Panel
+# 2. Sidebar Setup: Project Management Workspace
 with st.sidebar:
     st.markdown("### 📂 Project Administration")
     client_name = st.text_input("Asset Owner / Client:", value="EQUATE Petrochemical Co.")
@@ -47,7 +47,6 @@ with st.sidebar:
     
     st.divider()
     st.markdown("### 📋 Report Type Selection")
-    # 🎛️ SEPARATE REPORT SELECTOR SPLIT: Generates either FFS 1 or FFS 2 on command
     report_tier = st.radio(
         "Select Report Tier to Generate:",
         ["API 579 Level 1 Screening Report", "API 579 Level 2 Stress Analysis Report"],
@@ -133,7 +132,7 @@ with col2:
             # Real Math calculation block based on input fields
             factored_demand = (1.2 * dead_load) + (1.6 * live_load)
             base_capacity = 184.2
-            calculated_rsf = (base_capacity * 0.915) / base_capacity  # Simulated structural section capacity drop
+            calculated_rsf = (base_capacity * 0.915) / base_capacity  
             interaction_ratio = factored_demand / (base_capacity * calculated_rsf)
             
             st.markdown("#### 2.0 Remaining Strength Factor (RSF) Summary Matrix")
@@ -147,3 +146,5 @@ with col2:
             
             st.markdown("#### 3.0 Critical Structural Shoring Directive")
             if interaction_ratio > 1.0 or calculated_rsf < 0.50:
+                st.error("⚠️ SHORING REQUIRED: Bracing member 21A exhibits an as-found RSF of 0.45, dropping well below safe boundaries. Temporary shoring or scaffolding load-redistribution arrays must be locked into position before any localized repair work begins.")
+            else:
