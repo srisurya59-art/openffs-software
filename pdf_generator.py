@@ -87,7 +87,7 @@ def compile_compliance_pdf(report_metadata, uploaded_files_list):
     story.append(Spacer(1, 10))
     
     # ==========================================
-    # 3. METRICS ASSIGNMENT LOGS (Fixed Widths)
+    # 3. METRICS ASSIGNMENT LOGS (Fixed Widths Explicitly Set)
     # ==========================================
     story.append(Paragraph("1. Primary Operational Parameters", h1_style))
     param_table_data = [
@@ -95,8 +95,8 @@ def compile_compliance_pdf(report_metadata, uploaded_files_list):
         [Paragraph("Observed Cross-Section Area Loss", td_style), Paragraph(f"{area_loss} %", td_style)],
         [Paragraph("Maximum Observed Perforation Limit", td_style), Paragraph(f"{perf_diam} mm", td_style)]
     ]
-    # Fixed explicitly to 252 points per column
-    param_table = Table(param_table_data, colWidths=[252, 252])
+    # Explicit dimensions: Column 1 is 300 points, Column 2 is 204 points (Total 504)
+    param_table = Table(param_table_data, colWidths=[300, 204])
     param_table.setStyle(TableStyle([
         ('BACKGROUND', (0,0), (-1,0), ACCENT_COLOR),
         ('VALIGN', (0,0), (-1,-1), 'MIDDLE'),
@@ -109,7 +109,7 @@ def compile_compliance_pdf(report_metadata, uploaded_files_list):
     story.append(param_table)
     
     # ==========================================
-    # 4. COMPONENT-WISE COMPLIANCE ANALYSIS GRID (Fixed Widths)
+    # 4. COMPONENT-WISE COMPLIANCE ANALYSIS GRID (Fixed Widths Explicitly Set)
     # ==========================================
     story.append(Paragraph("2. Component-Wise Fitness-For-Service Assessment", h1_style))
     assessment_data = [
@@ -117,7 +117,7 @@ def compile_compliance_pdf(report_metadata, uploaded_files_list):
         [Paragraph("Metal Loss (Area)", td_style), Paragraph("&le; 10.0 % Loss", td_style), Paragraph(f"{area_loss} %", td_style), Paragraph(f"<b>{area_status}</b>", td_style)],
         [Paragraph("Pitting / Perforation", td_style), Paragraph("&le; 25.0 mm", td_style), Paragraph(f"{perf_diam} mm", td_style), Paragraph(f"<b>{perf_status}</b>", td_style)]
     ]
-    # Fixed explicitly to 126 points per column
+    # Explicit dimensions: 4 columns at 126 points each (Total 504)
     assess_table = Table(assessment_data, colWidths=[126, 126, 126, 126])
     assess_table.setStyle(TableStyle([
         ('BACKGROUND', (0,0), (-1,0), PRIMARY_COLOR),
@@ -176,5 +176,3 @@ def compile_compliance_pdf(report_metadata, uploaded_files_list):
                             ('GRID', (0,0), (-1,-1), 0.5, BORDER_COLOR),
                             ('TOPPADDING', (0,0), (-1,-1), 5),
                             ('BOTTOMPADDING', (0,0), (-1,-1), 5),
-                            ('LEFTPADDING', (0,0), (-1,-1), 6),
-                        ]))
