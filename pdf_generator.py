@@ -137,7 +137,9 @@ def compile_compliance_pdf(report_metadata, uploaded_files_list):
     if uploaded_files_list:
         for file_obj in uploaded_files_list:
             file_name = file_obj.name
-            file_ext = os.path.splitext(file_name).lower()
+            
+            # FIXED: Safe extension retrieval without splitting data structures into hidden tuples
+            file_ext = "." + file_name.split(".")[-1].lower() if "." in file_name else ""
             file_bytes = file_obj.getvalue()
             
             story.append(HRFlowable(width="100%", thickness=0.5, color=BORDER_COLOR, spaceBefore=8, spaceAfter=8))
@@ -164,7 +166,6 @@ def compile_compliance_pdf(report_metadata, uploaded_files_list):
                         
                         formatted_rows = [[Paragraph(str(cell), td_style) for cell in row] for row in table_dict['rows']]
                         
-                        # Dynamically safe column width constraint logic
                         num_cols = len(table_dict['rows'][0]) if table_dict['rows'] else 1
                         col_w = 504 / num_cols
                         
@@ -176,4 +177,3 @@ def compile_compliance_pdf(report_metadata, uploaded_files_list):
                             ('BOTTOMPADDING', (0,0), (-1,-1), 5),
                             ('LEFTPADDING', (0,0), (-1,-1), 6),
                         ]))
-                        story.append(doc_table)
