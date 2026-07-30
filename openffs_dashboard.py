@@ -1,7 +1,4 @@
 import streamlit as st
-import docx
-from PIL import Image
-import io
 
 # Set page configuration for a premium, specialized engineering suite look
 st.set_page_config(page_title="OpenFFS™ Pro - Advanced Fitness-For-Service Platform", layout="wide")
@@ -65,8 +62,9 @@ with st.sidebar:
         project_no = st.text_input("Document Reference No:", value="CCR-Area1-FFS-L2-001")
     
     st.divider()
-    st.markdown("### 📥 Document Asset Interception Engine")
-    uploaded_file = st.file_uploader("Upload Structural Field Data (DOCX Report Format)", type=["docx"])
+    st.markdown("### 📥 Field Asset Photography Link")
+    # 📸 STABLE MANUAL IMAGE ATTACHMENT: Bypasses file reading issues completely
+    uploaded_images = st.file_uploader("Attach Site Defect Photos to Include in PDF (JPG, PNG)", type=["jpg", "png", "jpeg"], accept_multiple_files=True)
 
 # 3. Main Workspace Setup
 col1, col2 = st.columns([1, 1.2])
@@ -147,14 +145,12 @@ with col2:
             st.error("CRITICAL ENGINEERING ALERT: Cross bracing element 21A yields an as-found RSF of 0.45, breaching the standard safety envelope. The calculated interaction ratio of 1.11 indicates structural overload conditions. Temporary load-bearing shoring profiles or structural scaffolding towers must be safely locked into position prior to completing localized weld restorations.")
 
         # -----------------------------------------------------------------------------------------
-        # IMAGE COMPILING LAYER
+        # 📸 STABLE ATTACHED IMAGE DELIVERABLE CANVAS
         # -----------------------------------------------------------------------------------------
         st.markdown("#### 4.0 Field Inspection Photographs — Component Defect Mapping")
         
-        if uploaded_file is not None:
-            doc = docx.Document(uploaded_file)
+        if uploaded_images:
             image_count = 0
-            for rel in doc.part.relations.values():
-                if "image" in rel.target_ref:
-                    image_bytes = rel.target_part.blob
-                    image_object = Image.open(io.BytesIO(image_bytes))
+            for file in uploaded_images:
+                image_count += 1
+                img = Image.open(file)
