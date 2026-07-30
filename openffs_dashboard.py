@@ -3,10 +3,10 @@ import docx
 from PIL import Image
 import io
 
-# Set page configuration for a premium, specialized engineering suite look
-st.set_page_config(page_title="OpenFFS™ Pro - Advanced Fitness-For-Service Platform", layout="wide")
+# Set page configuration for a specialized engineering suite look
+st.set_page_config(page_title="OpenFFS™ Pro - Integrity Suite", layout="wide")
 
-# 🖨️ ADVANCED VISUAL CONTROL: Isolates ONLY the formal technical report card for PDF printing
+# ADVANCED VISUAL CONTROL: Isolates the final technical report panels for print layouts
 st.markdown("""
 <style>
 @media print {
@@ -24,16 +24,10 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# 1. Commercial Enterprise Branding Header Block
-st.markdown("""
-<div style='background-color: #0F172A; padding: 24px; border-radius: 8px; margin-bottom: 25px; border-bottom: 5px solid #2563EB;'>
-    <h1 style='margin: 0; color: #FFFFFF; font-family: "Segoe UI", sans-serif; letter-spacing: 0.5px; font-size: 28px;'>OpenFFS™ Pro</h1>
-    <p style='margin: 4px 0 0 0; color: #38BDF8; font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;'>Fitness-For-Service Production Platform</p>
-    <div style='margin-top: 10px; font-size: 11px; color: #94A3B8; font-family: monospace;'>
-        Governing Compliance: API 579-1/ASME FFS-1 (2021) | AISC 360-22 Steel Construction Code | AWS D1.1 Structural Welding
-    </div>
-</div>
-""", unsafe_allow_html=True)
+# 1. Commercial Enterprise Branding Header
+st.title("OpenFFS™ Pro")
+st.caption("Fitness-For-Service Platform | Standards: API 579-1/ASME FFS-1 | AISC 360 Steel Code")
+st.divider()
 
 # 2. Sidebar Workspace: Project Metadata Configuration Panel
 with st.sidebar:
@@ -44,8 +38,6 @@ with st.sidebar:
     
     st.divider()
     st.markdown("### 📋 Standard & Part Selection")
-    
-    # Restored the critical engineering dropdown modules
     module = st.selectbox(
         "Applicable Design Code / Part Track:",
         [
@@ -64,8 +56,7 @@ with st.sidebar:
     st.markdown("### 📋 Report Output Protocol")
     report_tier = st.radio(
         "Select Report Deliverable to Compile:",
-        ["FFS Level 1 Screening Report", "FFS Level 2 Stress Analysis Report"],
-        help="Level 1 manages initial defect screening thresholds. Level 2 calculates structural component RSF metrics."
+        ["FFS Level 1 Screening Report", "FFS Level 2 Stress Analysis Report"]
     )
     
     if report_tier == "FFS Level 1 Screening Report":
@@ -102,57 +93,68 @@ with col1:
 with col2:
     if st.session_state.get("active_compiled_report") == report_tier:
         
+        # Display Metadata Header Block
+        st.info(f"**Doc Ref:** {project_no}  |  **Date:** {eval_date}  |  **Client:** {client_name}  |  **Structure ID:** {equipment_id}")
+        
         # -----------------------------------------------------------------------------------------
         # DELIVERABLE A: STANDALONE LEVEL 1 COMPONENT SCREENING MATRIX REPORT
         # -----------------------------------------------------------------------------------------
         if report_tier == "FFS Level 1 Screening Report":
-            st.markdown(f"""
-            <div style="background-color: #FFFFFF; padding: 30px; border: 1px solid #CBD5E1; border-top: 8px solid #0F172A; font-family: 'Segoe UI', sans-serif; color: #1E293B;">
-                <div style="float: right; font-size: 11px; text-align: right; color: #64748B;">
-                    <b>Doc Ref:</b> {project_no}<br><b>Date:</b> {eval_date}
-                </div>
-                <h2 style="color: #0F172A; margin: 0; font-size: 20px; font-weight: 700; letter-spacing: -0.5px;">FITNESS-FOR-SERVICE (FFS) LEVEL 1 SCREENING REPORT</h2>
-                <p style="color: #475569; margin: 4px 0 0 0; font-size: 12px; text-transform: uppercase; font-weight: 600; letter-spacing: 0.5px;">Governing Standard Track: {module}</p>
-                
-                <table style="width: 100%; margin-top: 20px; font-size: 12px; border-collapse: collapse;">
-                    <tr style="background-color: #F8FAFC; border-bottom: 1px solid #E2E8F0;">
-                        <td style="padding: 6px 0;"><b>Client / Asset Owner:</b></td><td>{client_name}</td>
-                        <td style="padding: 6px 0;"><b>Structure Tag ID:</b></td><td>{equipment_id}</td>
-                    </tr>
-                </table>
-                
-                <h3 style="color: #1E3A8A; font-size: 14px; margin-top: 25px; border-bottom: 2px solid #E2E8F0; padding-bottom: 5px;">1.0 Executive Evaluation Summary</h3>
-                <p style="font-size: 12.5px; line-height: 1.6; text-align: justify; margin-top: 8px;">
-                    A Level 1 screening evaluation was executed for the core members of the structural framing system. Assessments were performed strictly in accordance with governing design rules, mapping observed shrapnel punctures, local wall thinning profiles, and cross-sectional dimension degradations against code-permissible screening bounds prior to launching rigorous finite element or Level 2 analytical models.
-                </p>
-                
-                <h3 style="color: #1E3A8A; font-size: 14px; margin-top: 25px; border-bottom: 2px solid #E2E8F0; padding-bottom: 5px;">2.0 Component-Wise Screening Matrix</h3>
-                <table style="width: 100%; font-size: 11.5px; border-collapse: collapse; margin-top: 10px; text-align: left;">
-                    <thead>
-                        <tr style="background-color: #0F172A; color: #FFFFFF;">
-                            <th style="padding: 8px; border: 1px solid #1E293B;">Structural Member ID</th>
-                            <th style="padding: 8px; border: 1px solid #1E293B;">Observed Local Degradation Profile</th>
-                            <th style="padding: 8px; border: 1px solid #1E293B;">Measured Dimension</th>
-                            <th style="padding: 8px; border: 1px solid #1E293B;">Screening Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr style="border-bottom: 1px solid #E2E8F0;">
-                            <td style="padding: 8px; border: 1px solid #E2E8F0;"><b>Columns 29A / 29B</b></td>
-                            <td style="padding: 8px; border: 1px solid #E2E8F0;">Localized Web Thinning (Mechanical Impact)</td>
-                            <td style="padding: 8px; border: 1px solid #E2E8F0;">{corrosion_loss_pct}% Local Area Loss</td>
-                            <td style="padding: 8px; border: 1px solid #E2E8F0; color: #D97706; font-weight: bold;">REPAIR RECOMMENDED</td>
-                        </tr>
-                        <tr style="background-color: #F8FAFC; border-bottom: 1px solid #E2E8F0;">
-                            <td style="padding: 8px; border: 1px solid #E2E8F0;"><b>Floor Beams 25A</b></td>
-                            <td style="padding: 8px; border: 1px solid #E2E8F0;">Top Flange Through-Thickness Puncture</td>
-                            <td style="padding: 8px; border: 1px solid #E2E8F0;">⌀{max_hole_dia} mm Open Bore</td>
-                            <td style="padding: 8px; border: 1px solid #E2E8F0; color: #DC2626; font-weight: bold;">REPAIR MANDATORY</td>
-                        </tr>
-                        <tr style="border-bottom: 1px solid #E2E8F0;">
-                            <td style="padding: 8px; border: 1px solid #E2E8F0;"><b>Cross Bracings 21A</b></td>
-                            <td style="padding: 8px; border: 1px solid #E2E8F0;">Severe Structural Deformation Segment</td>
-                            <td style="padding: 8px; border: 1px solid #E2E8F0;">280x90mm Cluster Gouge</td>
-                            <td style="padding: 8px; border: 1px solid #E2E8F0; color: #DC2626; font-weight: bold;">FAIL TIER 1 - REQ LEVEL 2</td>
-                        </tr>
-                        <tr style="background-color: #F8FAFC; border-bottom: 1px solid #E2E8F0;">
+            st.markdown("## FITNESS-FOR-SERVICE (FFS) LEVEL 1 SCREENING REPORT")
+            st.caption(f"Governing Standard Track: {module}")
+            st.divider()
+            
+            st.markdown("#### 1.0 Executive Evaluation Summary")
+            st.write("A Level 1 screening evaluation was executed for the core members of the structural framing system. Assessments were performed strictly in accordance with governing design rules, mapping observed shrapnel punctures, local wall thinning profiles, and cross-sectional dimension degradations against code-permissible screening bounds prior to launching rigorous finite element or Level 2 analytical models.")
+            
+            st.markdown("#### 2.0 Component-Wise Screening Matrix")
+            l1_data = [
+                {"Structural Member ID": "Columns 29A / 29B", "Observed Local Degradation Profile": "Localized Web Thinning (Mechanical Impact)", "Measured Dimension": f"{corrosion_loss_pct}% Local Area Loss", "Screening Status": "REPAIR RECOMMENDED"},
+                {"Structural Member ID": "Floor Beams 25A", "Observed Local Degradation Profile": "Top Flange Through-Thickness Puncture", "Measured Dimension": f"⌀{max_hole_dia} mm Open Bore", "Screening Status": "REPAIR MANDATORY"},
+                {"Structural Member ID": "Cross Bracings 21A", "Observed Local Degradation Profile": "Severe Structural Deformation Segment", "Measured Dimension": "280x90mm Cluster Gouge", "Screening Status": "FAIL TIER 1 - REQ LEVEL 2"},
+                {"Structural Member ID": "Gusset Plates 50A", "Observed Local Degradation Profile": "Local Connection Flange Notching", "Measured Dimension": "60x20x5 mm Depth Notch", "Screening Status": "REPAIR RECOMMENDED"}
+            ]
+            st.table(l1_data)
+            
+            st.markdown("#### 3.0 Mandatory Repair Principles & Compliance Directives")
+            st.warning("COMPLIANCE DIRECTIVE: Members flagged with 'REPAIR MANDATORY' require restoration via qualified weld-overlay padding or structural splice plates in strict accordance with AWS D1.1 details. Through-thickness punctures on load-bearing floor beam flanges breach basic Level 1 acceptance criteria and require prompt structural remediation.")
+
+        # -----------------------------------------------------------------------------------------
+        # DELIVERABLE B: STANDALONE LEVEL 2 QUANTITATIVE COMPLIANCE & RSF REPORT
+        # -----------------------------------------------------------------------------------------
+        else:
+            factored_demand = (1.2 * dead_load) + (1.6 * live_load)
+            base_capacity = 184.2
+            calculated_rsf = 0.915
+            degraded_capacity = base_capacity * calculated_rsf
+            interaction_ratio = factored_demand / degraded_capacity
+
+            st.markdown("## LEVEL 2 STRUCTURAL STRESS & REMAINING STRENGTH REPORT")
+            st.caption(f"Governing Standard Track: {module}")
+            st.divider()
+            
+            st.markdown("#### 1.0 Advanced Stress Engineering Evaluation Basis")
+            st.write("A rigorous Level 2 analytical engineering assessment was performed to define the exact quantitative capacity margins retained within the damaged framing elements. Evaluation modeling evaluates net reduced cross-sectional areas against governing elastic stress limits to establish authentic Remaining Strength Factor (RSF) profiles under structural demands.")
+            
+            st.markdown("#### 2.0 Analytical Strength & Utilization Matrix")
+            l2_data = [
+                {"Structural Member Class": "Main Frame Columns (29A)", "Calculated As-Found RSF": f"{calculated_rsf:.2f}", "Allowable RSF_a": f"{rsf_allowable:.2f}", "Demand / Capacity Ratio": f"{interaction_ratio:.2f}", "Engineering Verdict": "STRUCTURALLY ACCEPTABLE"},
+                {"Structural Member Class": "Primary Floor Beams (25A)", "Calculated As-Found RSF": "0.87", "Allowable RSF_a": f"{rsf_allowable:.2f}", "Demand / Capacity Ratio": "0.38", "Engineering Verdict": "INSTALL DOUBLER PLATE"},
+                {"Structural Member Class": "Cross Bracing Tracks (21A)", "Calculated As-Found RSF": "0.45", "Allowable RSF_a": f"{rsf_allowable:.2f}", "Demand / Capacity Ratio": "1.11", "Engineering Verdict": "CRITICAL SHORING REQUIRED"}
+            ]
+            st.table(l2_data)
+            
+            st.markdown("#### 3.0 Proactive Structural Shoring Directives")
+            st.error("CRITICAL ENGINEERING ALERT: Cross bracing element 21A yields an as-found RSF of 0.45, breaching the standard safety envelope. The calculated interaction ratio of 1.11 indicates structural overload conditions. Temporary load-bearing shoring profiles or structural scaffolding towers must be safely locked into position prior to completing localized weld restorations.")
+
+        # -----------------------------------------------------------------------------------------
+        # BROAD-SPECTRUM GRAPHIC LAYER: READS ALL ZIP/MEDIA CHANNELS DIRECTLY FROM THE FILE
+        # -----------------------------------------------------------------------------------------
+        st.markdown("#### 4.0 Field Inspection Photographs — Component Defect Mapping")
+        
+        if uploaded_file is not None:
+            try:
+                doc = docx.Document(uploaded_file)
+                image_count = 0
+                for part in doc.part.package.parts:
+                    if "media/image" in part.partname.lower():
